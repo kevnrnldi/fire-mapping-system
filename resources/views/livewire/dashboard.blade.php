@@ -40,7 +40,7 @@
             <div class="lg:col-span-2">
                 <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
                     <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Laporan Terbaru</h2>
-                    <ul class="divide-y divide-gray-200 dark:divide-gray-700">
+                    <ul class="divide-y divide-gray-200 dark:divide-gray-600">
                         @forelse ($recentReports as $report)
                             <li class="py-4 flex justify-between items-center">
                                 <div>
