@@ -5,76 +5,109 @@ namespace App\Livewire\Admin;
 use App\Models\GuestReport;
 use Livewire\WithPagination;
 use Livewire\Component;
+use Illuminate\Support\Facades\Storage;
 
 class ViewFireReports extends Component
 {
-    public $filterReportStatus;
-    public $filterFireStatus;
-    public $search = '';
-    public $selectedReport;
+    use WithPagination;
 
+    // Properti untuk filter dan pencarian
+    public $search = '';
+    public $filterReportStatus = '';
+    public $filterFireStatus = '';
+
+    // Properti untuk Modal Konfirmasi Hapus
+    public $reportIdToDelete = null;
+    public $isConfirmingDelete = false;
+
+    // Reset paginasi saat filter atau pencarian berubah
     public function updatingSearch() { $this->resetPage(); }
     public function updatedFilterReportStatus() { $this->resetPage(); }
     public function updatedFilterFireStatus() { $this->resetPage(); }
 
+    /**
+     * Merender komponen dan mengambil data laporan.
+     */
     public function render()
     {
-           $reports = GuestReport::query() 
-            // Logika untuk pencarian
+        // Query untuk mengambil laporan dengan filter dan pencarian
+        $reports = GuestReport::query()
+            ->with('images') // Eager load relasi untuk performa (opsional jika tak ada thumbnail)
             ->when($this->search, function ($query) {
-                $query->where(function ($subQuery) {
-                    $subQuery->where('name', 'like', '%' . $this->search . '%')
-                             ->orWhere('contact', 'like', '%' . $this->search . '%')
-                             ->orWhere('location', 'like', '%' . $this->search . '%');
+                // Grupkan kondisi pencarian agar tidak mengganggu filter
+                $query->where(function($q) {
+                    $q->where('name', 'like', '%' . $this->search . '%')
+                      ->orWhere('contact', 'like', '%' . $this->search . '%')
+                      ->orWhere('location', 'like', '%' . $this->search . '%');
                 });
             })
-            // Logika untuk filter status
-            ->when($this->filterReportStatus, fn($q) => $q->where('report_status', $this->filterReportStatus))
-            ->when($this->filterFireStatus, fn($q) => $q->where('fire_status', $this->filterFireStatus))
-            ->latest()
-            ->paginate(10);
+            ->when($this->filterReportStatus, function ($query) {
+                $query->where('report_status', $this->filterReportStatus);
+            })
+            ->when($this->filterFireStatus, function ($query) {
+                $query->where('fire_status', $this->filterFireStatus);
+            })
+            ->latest() // Urutkan dari yang terbaru
+            ->paginate(10); // Atur jumlah item per halaman
 
         return view('livewire.admin.view-fire-reports', [
             'reports' => $reports,
-        ])->layout('layout.mainLayout');
+        ])->layout('layout.mainLayout'); // Pastikan path layout benar
     }
 
-    public function viewReport($reportId)
+    /**
+     * Mengupdate status verifikasi laporan (Diterima/Ditolak).
+     */
+    public function updateReportStatus($id, $status)
     {
-        $this->selectedReport = GuestReport::findOrFail($reportId); 
-        
-        // Kirim event ke browser dengan data koordinat
-        $this->dispatch('showReportModal', [
-            'latitude' => $this->selectedReport->latitude,
-            'longitude' => $this->selectedReport->longitude,
-        ]);
-    }
+        $report = GuestReport::findOrFail($id);
 
-    public function closeModal()
-    {
-        $this->selectedReport = null;
-    }
+        $report->report_status = $status;
 
-    public function updateReportStatus($reportId, $status)
-    {
-       $report = GuestReport::find($reportId);
-       if($report && in_array($status, [ 'Diterima', 'Ditolak'])) {
-           $report->report_status = $status;
-           if($status == 'Diterima' && $report -> fire_status == 'Sedang Terjadi') {
-               $report->fire_status = 'Dalam Penanganan';
-           }
-           $report->save();
-           session()->flash('message', 'Laporan Diperbaharui');
-       }
-    }
-     public function updateFireStatus($reportId, $status)
-    {
-        $report = GuestReport::find($reportId);
-        if ($report && $report->report_status == 'Diterima' && in_array($status, ['Dalam Penanganan', 'Selesai'])) {
-            $report->fire_status = $status;
-            $report->save();
-            session()->flash('message', 'Status kebakaran telah diperbarui.');
+        // Jika laporan diterima, otomatis set status kebakaran menjadi "Dalam Penanganan"
+        if ($status == 'Diterima') {
+            if ($report->fire_status != 'Selesai') {
+                $report->fire_status = 'Dalam Penanganan';
+            }
         }
+        
+        $report->save();
+
+        session()->flash('success', 'Status laporan berhasil diperbarui.');
     }
 
+    /**
+     * Membuka modal konfirmasi sebelum menghapus.
+     */
+    public function confirmDelete($id)
+    {
+        $this->reportIdToDelete = $id;
+        $this->isConfirmingDelete = true;
+    }
+    
+    public function closeConfirmModal()
+    {
+        $this->isConfirmingDelete = false;
+        $this->reportIdToDelete = null;
+    }
+
+    public function deleteReport()
+    {
+        $report = GuestReport::findOrFail($this->reportIdToDelete);
+
+        if ($report->images->isNotEmpty()) {
+            foreach ($report->images as $image) {
+                Storage::disk('public')->delete($image->path);
+                $image->delete(); 
+            }
+        }
+
+        $report->delete(); 
+
+        session()->flash('error', 'Laporan telah ditolak dan dihapus.');
+        
+        $this->closeConfirmModal();
+    }
+
+    
 }

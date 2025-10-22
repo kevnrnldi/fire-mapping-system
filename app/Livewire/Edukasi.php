@@ -31,7 +31,7 @@ class Edukasi extends Component
         return [
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'image' => 'nullable|image|max:2048', 
+            'image' => 'required|image|max:2048', 
             'video' => ['nullable', 'string', 'max:255', 'url', function ($attribute, $value, $fail) {
                 if ($value && !preg_match('/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/', $value)) {
                     $fail('URL video harus dari YouTube.');
@@ -39,6 +39,17 @@ class Edukasi extends Component
             }],
         ];
     }
+
+    protected $messages = [
+      'title.required' => 'Judul artikel harus diisi.',
+      'content.required' => 'Isi artikel harus diisi.',
+      'image.required' => 'Foto artikel harus diunggah.',
+      'image.image' => 'File yang diunggah bukan gambar.',
+      'image.max' => 'Ukuran gambar maksimal 2MB.',
+      'title.max' => 'Judul artikel tidak boleh lebih dari 255 karakter.',
+      'content.max' => 'Isi artikel tidak boleh lebih dari 255 karakter.',
+    ];
+
 
     public function updatingSearch() { $this->resetPage(); }
 
@@ -109,7 +120,7 @@ class Edukasi extends Component
             'video' => $this->video,
         ]);
 
-        session()->flash('message', $this->id ? 'Artikel berhasil diperbarui.' : 'Artikel berhasil ditambahkan.');
+        session()->flash('success', $this->id ? 'Artikel berhasil diperbarui.' : 'Artikel berhasil ditambahkan.');
         
         $this->closeModal();
         $this->resetForm();
@@ -127,11 +138,11 @@ class Edukasi extends Component
     public function delete()
     {
         $article = EducationArticle::findOrFail($this->articleIdToDelete);
-        if ($article->image_path) {
-            \Illuminate\Support\Facades\Storage::disk('public')->delete($article->image_path);
+        if ($article->image) {
+            \Illuminate\Support\Facades\Storage::disk('public')->delete($article->image);
         }
         $article->delete();
-        session()->flash('message', 'Artikel berhasil dihapus.');
+        session()->flash('error', 'Artikel berhasil dihapus.');
         $this->closeConfirmModal();
     }
 

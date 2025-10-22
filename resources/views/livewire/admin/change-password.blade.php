@@ -1,27 +1,27 @@
 <div>
     {{-- Container utama dengan tata letak dua kolom --}}
-    <div class="grid grid-cols-1 gap-x-16 gap-y-8 lg:grid-cols-5">
+    <div class="grid grid-cols-1 gap-x-16 gap-y-8 lg:grid-cols-5 pt-3">
         
         {{-- Kolom Kiri: Judul dan Deskripsi --}}
         <div class="lg:col-span-2">
-            <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100">
-                 <span class="text-yellow-400">Ganti Password</span> 
+            <h2 class="text-2xl font-bold text-gray-800 ">
+                 <span class="text-yellow-500">Ganti Password</span> 
             </h2>
-            <p class="mt-2 text-sm text-gray-500 dark:text-white">
+            <p class="mt-2 text-sm text-gray-800 ">
                 Perbarui password akun Anda. Untuk keamanan, pastikan Anda tidak menggunakan password ini di tempat lain.
             </p>
         </div>
 
         {{-- Kolom Kanan: Form --}}
         <div class="lg:col-span-3">
-            <div class="rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
+            <div class="rounded-lg border border-gray-200 bg-white shadow-lg  ">
                 <form wire:submit.prevent="updatePassword">
                     {{-- Bagian Isi Form --}}
                     <div class="p-6">
                         <div class="space-y-6">
                             {{-- Success Message --}}
                             @if (session('status'))
-                                <div class="rounded-md bg-green-50 p-4 dark:bg-green-900/50">
+                                <div class="rounded-md bg-gray-50 p-4 ">
                                     <div class="flex">
                                         <div class="flex-shrink-0">
                                             <svg class="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -29,7 +29,7 @@
                                             </svg>
                                         </div>
                                         <div class="ml-3">
-                                            <p class="text-sm font-medium text-green-700 dark:text-green-300">
+                                            <p class="text-sm font-medium text-green-700 ">
                                                 {{ session('status') }}
                                             </p>
                                         </div>
@@ -39,7 +39,7 @@
 
                             {{-- Current Password --}}
                             <div>
-                                <label for="currentPassword" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                <label for="currentPassword" class="block text-sm font-medium text-gray-900 ">
                                     Password Saat Ini
                                 </label>
                                 <input 
@@ -47,14 +47,14 @@
                                     wire:model.defer="currentPassword"
                                     type="password" 
                                     required
-                                    class="mt-1 block w-full px-2 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                                    class="mt-1 block w-full px-2 rounded-md border-gray-600 shadow-lg ring-1 ring-red-200 focus:border-blue-500 focus:ring-blue-500 "
                                 >
                                 @error('currentPassword') <p class="mt-2 text-xs text-red-500">{{ $message }}</p> @enderror
                             </div>
 
                             {{-- New Password --}}
                             <div>
-                                <label for="newPassword" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                <label for="newPassword" class="block text-sm font-medium text-gray-700 ">
                                     Password Baru
                                 </label>
                                 <input 
@@ -62,15 +62,15 @@
                                     wire:model.defer="newPassword"
                                     type="password" 
                                     required
-                                    class="mt-1 block w-full px-2 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                                    class="mt-1 block w-full px-2 rounded-md border-gray-300 shadow-lg ring-1 ring-red-200 focus:border-blue-500 focus:ring-blue-500 "
                                 >
-                                <p class="mt-2 text-xs text-gray-500">Minimal 8 karakter.</p>
+                                <p class="mt-2 text-xs text-gray-700">Minimal 8 karakter.</p>
                                 @error('newPassword') <p class="mt-2 text-xs text-red-500">{{ $message }}</p> @enderror
                             </div>
 
                             {{-- Confirm New Password --}}
                             <div>
-                                <label for="newPassword_confirmation" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                <label for="newPassword_confirmation" class="block text-sm font-medium text-gray-700 ">
                                     Konfirmasi Password Baru
                                 </label>
                                 <input 
@@ -78,13 +78,13 @@
                                     wire:model.defer="newPassword_confirmation"
                                     type="password" 
                                     required
-                                    class="mt-1 block px-2 w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                                    class="mt-1 block px-2 w-full rounded-md border-gray-300 shadow-lg ring-1 ring-red-200 focus:border-blue-500 focus:ring-blue-500 "
                                 >
                             </div>
                         </div>
                     </div>
 
-                    <div class="flex items-center justify-end gap-x-3 rounded-b-lg border-t border-gray-200 bg-gray-50 px-4 py-3 dark:border-gray-700 dark:bg-gray-800/50">
+                    <div class="flex items-center justify-end gap-x-3 rounded-b-lg border-t border-gray-200 bg-gray-50 px-4 py-3  ">
                       <div>
                             {{-- Pop-up notifikasi --}}
                             <div 

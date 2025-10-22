@@ -10,12 +10,13 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 antialiased">
-
-    <main>
+<body class=" antialiased bg-cover bg-center bg-fixed" style="background-image: url({{ asset('assets/img/login-background.jpg') }}) ">
+    
+    <main class="min-h-screen flex items-center justify-center ">
         {{ $slot }}
+        
     </main>
-
+    
     @livewireScripts
 </body>
 </html>

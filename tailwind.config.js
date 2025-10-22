@@ -8,7 +8,15 @@ export default {
     './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
   ],
   theme: {
-    extend: {},
+    extend: {
+       fontFamily: {
+                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                // Tambahkan baris ini
+                serif: ['Lora', 'serif'], 
+            },
+    },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 }

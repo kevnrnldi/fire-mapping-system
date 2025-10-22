@@ -17,6 +17,18 @@ class Login extends Component
         ];
     }
 
+    protected $message = [
+        'email.required' => 'Email harus diisi',
+        'password.required' => 'Password harus diisi',
+        'email.email' => 'Email tidak valid',
+        'email.unique' => 'Email sudah terdaftar',
+        'password.min' => 'Password minimal 8 karakter',
+        'password.confirmed' => 'Password tidak cocok',
+        'email.exists' => 'Email belum terdaftar',
+        
+    ];
+
+
     public function login(){
         $credentials = $this->validate();
         if(Auth::attempt($credentials, $this->remember)){

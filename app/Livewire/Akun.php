@@ -38,6 +38,18 @@ class Akun extends Component
         ];
     }
 
+    
+    protected $messages =
+         [
+            'email.unique' => 'Email sudah terdaftar',
+            'password.confirmed' => 'Password tidak cocok',
+            'password.min' => 'Password minimal 8 karakter',
+            'password.required' => 'Password harus diisi',
+            'name.required' => 'Nama harus diisi',
+            'email.required' => 'Email harus diisi',
+            'email.email' => 'Format email tidak valid',
+        ];
+
     // Reset halaman saat melakukan pencarian
     public function updatingSearch()
     {

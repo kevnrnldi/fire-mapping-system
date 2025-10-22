@@ -9,20 +9,20 @@
     
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 </head>
-<body class="bg-gray-500 ">
+<body class="bg-gray-100 ">
   {{-- Layout utama --}}
    <div class="flex h-screen">
    
         <div 
-            id="sidebar" {{-- ID ditambahkan --}}
-            class="fixed inset-y-0 left-0 z-30 flex h-screen w-64 flex-col justify-between border-e bg-white transition-transform duration-300 ease-in-out -translate-x-full dark:border-gray-700 dark:bg-gray-900 md:relative md:translate-x-0"
+            id="sidebar" 
+            class="fixed inset-y-0 left-0 z-30 flex h-screen w-64 flex-col justify-between border-e  transition-transform duration-300 ease-in-out -translate-x-full  bg-red-800 md:relative md:translate-x-0"
         >
             <div>
                 <div class="flex items-center gap-2 px-4 py-4">
                     <img src="https://i0.wp.com/satpolpp.ngawikab.go.id/wp-content/uploads/2023/09/cropped-LOGO-PEMADAM-KEBAKARAN.png?ssl=1" class="size-10 rounded-lg" alt="Logo">
-                    <span class="text-base font-semibold text-gray-800 dark:text-white">petaKebakaran</span>
+                    <span class="text-base font-semibold text-white ">pantauKebakaran.id</span>
                 </div>
-                <div class="border-t border-gray-100 dark:border-gray-700">
+                <div class="border-t border-white ">
                     <div class="px-4 py-4">
                         <ul class="space-y-1">
 
@@ -30,9 +30,9 @@
                             <li>
                             <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 rounded-lg text-sm font-medium px-4 py-2
                               @if(request()->routeIs('admin.dashboard'))
-                                'bg-blue-50 text-blue-700 dark:bg-gray-800 dark:text-blue-400'
+                                'bg-blue-50 text-yellow-500 '
                               @else
-                              'text-gray-500 hover:bg-gray-50 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800'
+                              ' text-white hover:bg-gray-50 hover:text-gray-700 '
                                @endif
                               )
                            ">
@@ -45,9 +45,9 @@
                             <li class="mt-3">
                             <a href="{{ route('admin.laporan') }}" class="flex items-center gap-3 rounded-lg px-4 py-2 text-sm font-medium 
                                @if(request()->routeIs('admin.laporan'))
-                                'bg-blue-50 text-blue-700 dark:bg-gray-800 dark:text-blue-400'
+                                'bg-blue-50  text-yellow-500 '
                                @else
-                              'text-gray-500 hover:bg-gray-50 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800'
+                              ' text-white hover:bg-gray-50 hover:text-gray-700  '
                                @endif
                                )
                             ">
@@ -62,9 +62,9 @@
                             <li class="mt-3">
                             <a href="{{ route('admin.map') }}" class="flex items-center gap-3 rounded-lg px-4 py-2 text-sm font-medium 
                                @if(request()->routeIs('admin.map'))
-                                'bg-blue-50 text-blue-700 dark:bg-gray-800 dark:text-blue-400'
+                                'bg-blue-50   text-yellow-500 '
                                @else
-                              'text-gray-500 hover:bg-gray-50 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800'
+                              ' text-white hover:bg-gray-50 hover:text-gray-700 '
                                @endif
                                )
                             ">
@@ -79,9 +79,9 @@
                           <li class="mt-3">
                             <a href="{{ route('admin.edukasi') }}" class="flex items-center gap-3 rounded-lg px-4 py-2 text-sm font-medium 
                                @if(request()->routeIs('admin.edukasi'))
-                                'bg-blue-50 text-blue-700 dark:bg-gray-800 dark:text-blue-400'
+                                'bg-blue-50   text-yellow-500 '
                                @else
-                              'text-gray-500 hover:bg-gray-50 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800'
+                              ' text-white hover:bg-gray-50 hover:text-gray-700 '
                                @endif
                                )
                             ">
@@ -100,10 +100,10 @@
                                   class="flex cursor-pointer items-center justify-between gap-3 rounded-lg px-4 py-2
                                   
                                   {{-- Logika untuk highlight menu utama jika salah satu submenu aktif --}}
-                                  @if(request()->routeIs('admin.akun'))
-                                      'bg-blue-50 text-blue-700 dark:bg-gray-800 dark:text-blue-400'
+                                  @if(request()->routeIs('admin.akun' , 'admin.change-password'))
+                                      'bg-blue-50   text-yellow-500 '   
                                   @else
-                                      'text-gray-500 hover:bg-gray-50 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800'
+                                      ' text-white hover:bg-gray-50 hover:text-gray-700 '
                                   @endif
                                   ">
 
@@ -135,9 +135,9 @@
                                           href="{{ route('admin.akun') }}"
                                           class="block rounded-lg px-4 py-2 text-sm font-medium
                                           @if(request()->routeIs('admin.akun'))
-                                              'bg-gray-100 text-yellow-600 dark:bg-gray-800 dark:text-gray-200'
+                                              'bg-blue-50   text-yellow-500 '
                                           @else
-                                              'text-gray-500 hover:bg-gray-50 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800'
+                                              ' text-white hover:bg-gray-50 hover:text-gray-700 '
                                           @endif
                                           ">
                                           Pengaturan Akun</a>
@@ -147,9 +147,9 @@
                                           href="{{ route('admin.change-password') }}"
                                           class="block rounded-lg px-4 py-2 text-sm font-medium
                                           @if(request()->routeIs('admin.change-password'))
-                                              'bg-gray-100 text-yellow-600 dark:bg-gray-800 dark:text-gray-200'
+                                              'bg-blue-50   text-yellow-500 '
                                           @else
-                                              'text-gray-500 hover:bg-gray-50 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800'
+                                              ' text-white hover:bg-gray-50 hover:text-gray-700 '
                                           @endif
                                           ">
                                           Reset Password</a>
@@ -163,26 +163,26 @@
             </div>
             
             {{-- Logout --}}
-            <div class="sticky inset-x-0 bottom-0 border-t border-gray-100 bg-white p-2 dark:border-gray-700 dark:bg-gray-900">
-                <a href="{{ route('login') }}" class="flex items-center gap-3 rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-red-600 hover:text-white dark:text-gray-400 dark:hover:bg-red-600">
+            <div class="sticky inset-x-0 bottom-0 border-t border-white  p-2  bg-gray-500">
+                <a href="{{ route('login') }}" class="flex items-center gap-3 rounded-lg px-4 py-2 text-sm font-medium text-white hover:bg-gray-50 hover:text-gray-700 ">
                     <svg xmlns="http://www.w3.org/2000/svg" class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
                     <span class="text-sm font-medium">Keluar</span>
                 </a>
             </div>
-        </div>
+        </div> 
 
         {{-- Sidebar backdrop --}}
         <div id="sidebar-backdrop" class="fixed inset-0 z-20 hidden bg-black/50 md:hidden"></div> {{-- ID ditambahkan --}}
 
-        <div class="flex flex-1 flex-col overflow-y-auto">
-            <header class="flex h-16 shrink-0 items-center justify-between border-b bg-white p-4 dark:border-gray-700 dark:bg-gray-900 md:justify-end">
-                <button id="hamburger-button" class="text-gray-600 dark:text-gray-300 md:hidden"> {{-- ID ditambahkan --}}
+        <div class="flex flex-1 flex-col ">
+            <header class="flex h-16 shrink-0 items-center justify-between border-b  p-4  bg-red-700 md:justify-end sticky top-0 z-10">
+                <button id="hamburger-button" class="text-white hover:text-yellow-500 border border-white p-2 rounded-md ring-2  focus:outline-none focus:ring-2 focus:ring-inset  hover:border-yellow-500 transition-colors duration-300 shadow-xs md:hidden"> {{-- ID ditambahkan --}}
                     <span class="sr-only">Buka menu</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
                 </button>
                 
                 <div class="flex items-center">
-                    <button type="button" class="overflow-hidden rounded-full bg-blue-800">
+                    <button type="button" class="overflow-hidden rounded-full bg-blue-600">
                       <div class="flex items-center gap-1 px-4 ">
                         <p class="text-sm text-white font-mono font-bold">{{ Auth::user()->name }}</p>
                         <img src="https://static.vecteezy.com/system/resources/thumbnails/009/636/683/small_2x/admin-3d-illustration-icon-png.png" alt="User Profile" class="size-10 object-cover" />
@@ -192,8 +192,12 @@
             </header>
 
             {{-- Halaman Utama --}}
-            <main class="flex-1 p-6 md:p-8">
+            <main class="flex-1 px-6  md:p-8 overflow-y-auto">
+              @if(isset($slot))
                  {{ $slot }} 
+                 @else 
+                 @yield('content')
+                 @endif
             </main>
         </div>
     </div>
@@ -226,8 +230,9 @@
 </script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     
-@stack('scripts')
+
  @livewireScripts
+ @stack('scripts')
  {{-- <script src="//unpkg.com/alpinejs" defer></script> --}}
 </body>
 </html>
