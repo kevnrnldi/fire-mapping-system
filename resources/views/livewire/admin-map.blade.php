@@ -69,7 +69,7 @@
                 class="bg-white rounded-lg shadow-xl overflow-hidden max-w-4xl w-full z-50">
                 
                 <div class="flex justify-between items-center p-4 border-b bg-red-600">
-                    <h3 class="text-lg font-bold text-white ">Buat Data  <span class="text-yellow-500">Area Kebakaran</span> </h3>
+                    <h3 class="text-lg font-bold text-white ">Buat Data<span class="text-yellow-500">Area Kebakaran</span> </h3>
                     <button @click="showModal = false; $wire.resetForm(); removeNewMarker();" class="text-gray-400 hover:text-gray-600">&times;</button>
                 </div>
 
